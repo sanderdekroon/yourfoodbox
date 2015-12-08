@@ -17,8 +17,8 @@ class CreateCitiesTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->integer('openingDay')->unsigned();
-            $table->integer('openingHoursFrom')->unsigned();
-            $table->integer('openingHoursTill')->unsigned();
+            $table->time('openingHoursFrom');
+            $table->time('openingHoursTill');
             $table->timestamps();
         });
     }

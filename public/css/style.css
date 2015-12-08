@@ -1,0 +1,18 @@
+.input-group-label, .input-group-field, .input-group-button, textarea {
+	color: #3C3C3C;
+}
+
+fieldset {
+	border: 1px solid #ededed;
+	padding: 2em 1em;
+}
+
+.top-bar {
+	max-width: 70rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.contain-to-grid {
+	background: #eee;
+}

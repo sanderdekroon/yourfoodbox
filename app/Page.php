@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model
 {
     protected $fillable = [
-        'slug', 'title', 'content', 'is_published', 'user_id' //Tijdelijk
+        'slug', 'title', 'content', 'is_published', 'user_id'
     ];
 
     /**

@@ -10,8 +10,8 @@ class PagesController extends Controller
     
     public function __construct()
     {
-        $this->middleware('auth', ['only' => 'create']);
-        $this->middleware('auth.moderator', ['only' => 'create']);
+        $this->middleware('auth', ['only' => ['create', 'edit', 'update', 'store'] ]);
+        $this->middleware('auth.moderator', ['only' => ['create', 'edit', 'update', 'store'] ]);
     }
     /**
      * Show all the pages.

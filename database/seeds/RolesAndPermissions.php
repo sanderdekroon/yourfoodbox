@@ -15,7 +15,7 @@ class RolesAndPermissions extends Seeder
     public function run()
     {
         /**
-         * Create three roles: admin, moderator and user.
+         * Create four roles: admin, moderator, user and guest.
          */
         $admin = new Role();
         $admin->name = 'admin';
@@ -32,8 +32,14 @@ class RolesAndPermissions extends Seeder
         $user = new Role();
         $user->name = 'user';
         $user->display_name = 'Gebruiker';
-        $user->description = 'Standaard gebruiker. Kan bestellingen plaatsen.';
+        $user->description = 'Standaard gebruiker. Kan bestellingen plaatsen en eigen gegevens inkijken.';
         $user->save();
+
+        $guest = new Role();
+        $guest->name = 'guest';
+        $guest->display_name = 'Gast';
+        $guest->description = 'Standaard gebruiker. Kan bestellingen plaatsen.';
+        $guest->save();
 
         /**
          * Attach roles to users.
@@ -46,6 +52,9 @@ class RolesAndPermissions extends Seeder
 
         $normalUser = User::where('email', '=', 'marie@doe.nl')->first();
         $normalUser->attachRole($user);
+
+        $guestUser = User::where('email', '=', 'gast@gastman.com')->first();
+        $guestUser->attachRole($guest);
 
         /**
          * Create permissions.

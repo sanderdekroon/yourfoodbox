@@ -11,7 +11,8 @@
         "squizlabs/php_codesniffer": "*",
         "phpmd/phpmd": "^2.3",
         "fabpot/php-cs-fixer": "^1.10",
-        "zizaco/entrust": "dev-laravel-5"
+        "zizaco/entrust": "dev-laravel-5",
+        "doctrine/dbal": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

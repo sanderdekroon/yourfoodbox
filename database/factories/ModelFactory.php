@@ -13,7 +13,9 @@
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
+        'is_guest' => 0,
         'name' => $faker->name,
+        'phonenumber' => $faker->PhoneNumber,
         'email' => $faker->email,
         'password' => bcrypt(str_random(10))
     ];

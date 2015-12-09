@@ -19,5 +19,13 @@ class CitiesTableSeeder extends Seeder
         $lwd->openingHoursFrom = '07:00:00';
         $lwd->openingHoursTill = '17:00:00';
         $lwd->save();
+
+        $groningen = new App\City;
+        $groningen->name = 'Groningen';
+        $groningen->address = 'Vismarkt, 9711 JB';
+        $groningen->openingDay = 3;
+        $groningen->openingHoursFrom = '07:00:00';
+        $groningen->openingHoursTill = '17:00:00';
+        $groningen->save();
     }
 }

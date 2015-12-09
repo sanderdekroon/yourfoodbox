@@ -23,9 +23,25 @@ class ProductsTableSeeder extends Seeder
         $spaghetti = new App\Product;
         $spaghetti->week_no = date('W');
         $spaghetti->year = 2015;
-        $spaghetti->name = 'Spagehtti';
+        $spaghetti->name = 'Spaghetti';
         $spaghetti->description = 'Lorem ipsum.';
         $spaghetti->city_id = 1;
         $spaghetti->save();
+
+        $visgerecht = new App\Product;
+        $visgerecht->week_no = date('W');
+        $visgerecht->year = 2015;
+        $visgerecht->name = 'Visgerecht';
+        $visgerecht->description = 'Lorem ipsum.';
+        $visgerecht->city_id = 2;
+        $visgerecht->save();
+
+        $testgerecht = new App\Product;
+        $testgerecht->week_no = date('W');
+        $testgerecht->year = 2015;
+        $testgerecht->name = 'Test gerecht';
+        $testgerecht->description = 'Lorem ipsum.';
+        $testgerecht->city_id = 2;
+        $testgerecht->save();
     }
 }

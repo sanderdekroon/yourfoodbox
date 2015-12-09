@@ -15,13 +15,18 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Authentication routes...
 Route::get('/login', 'Auth\AuthController@getLogin');
 Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
 
-// Registration routes...
 Route::get('/register', 'Auth\AuthController@getRegister');
 Route::post('/register', 'Auth\AuthController@postRegister');
 
 Route::resource('pages', 'PagesController');
+
+Route::get('/bestellen/markt/{name}', 'CitiesController@setCity');
+Route::get('/bestellen/markt', 'CitiesController@index');
+Route::get('/bestellen', 'ProductsController@index');
+
+//Dev, please ignore.
+Route::get('/destroySession', 'CitiesController@destroyCity');

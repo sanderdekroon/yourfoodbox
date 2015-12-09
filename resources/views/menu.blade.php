@@ -5,6 +5,7 @@
                 <li class="menu-text">Your Food Box</li>
                 <li><a href="{{url('/')}}">Home</a></li>
                 <li><a href="{{url('/pages')}}">Pagina's</a></li>
+                <li><a href="{{url('/bestellen')}}">Bestellen</a></li>
                 
             </ul>
         </div>

@@ -31,5 +31,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'auth.admin' => \App\Http\Middleware\AuthAdmin::class,
         'auth.moderator' => \App\Http\Middleware\AuthModerator::class,
+        'select.city' => \App\Http\Middleware\RedirectIfCityNotSelected::class,
     ];
 }

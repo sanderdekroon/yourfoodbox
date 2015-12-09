@@ -15,15 +15,19 @@ Route::get('/', function () {
     return view('index');
 });
 
+// Authentication
 Route::get('/login', 'Auth\AuthController@getLogin');
 Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
 
+// Registration
 Route::get('/register', 'Auth\AuthController@getRegister');
 Route::post('/register', 'Auth\AuthController@postRegister');
 
+// Pages
 Route::resource('pages', 'PagesController');
 
+// Ordering
 Route::get('/bestellen/markt/{name}', 'CitiesController@setCity');
 Route::get('/bestellen/markt', 'CitiesController@index');
 Route::get('/bestellen', 'ProductsController@index');

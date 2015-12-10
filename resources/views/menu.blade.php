@@ -15,9 +15,9 @@
                     <li><span>Ingelogd als:</span></li>
                     <li><a href="#">{{Auth::user()['name']}}</a></li>
                     @if(Entrust::hasRole('admin'))
-                        <li><a href="#">Secret admin menu</a></li>
+                        <li><a href="{{action('OrdersController@index')}}">Orders</a></li>
                     @elseif(Entrust::hasRole('moderator'))
-                        <li><a href="#">Secret mod menu</a></li>
+                        <li><a href="{{action('OrdersController@index')}}">Orders</a></li>
                     @endif
                     <li><a href="{{action('Auth\AuthController@getLogout')}}">Uitloggen</a></li>
                 @else

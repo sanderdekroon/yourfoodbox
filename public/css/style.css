@@ -16,3 +16,8 @@ fieldset {
 .contain-to-grid {
 	background: #eee;
 }
+
+.no-spacing {
+	margin: 0;
+	padding: 0;
+}

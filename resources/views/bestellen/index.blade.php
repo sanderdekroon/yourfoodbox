@@ -7,11 +7,25 @@
 			<hr/>
 
 			@foreach($products as $product)
+				
 				<h2>
-					{{ $product->name }}
+					<a href="{{ action('ProductsController@show', $product->name)}}" title="{{ $product->name }}">
+						{{ $product->name }}
+					</a>
 				</h2>
 					
 				<p>{{ $product->description }}</p>
+				@foreach($orderLines as $orderLine)
+					@if($product['id'] == $orderLine['product_id'])
+
+						{!! Form::open(['method' => 'PATCH', 'url' => 'bestellen/', 'class' => 'small-3 columns end']) !!}
+							{!! Form::label('amount', 'Hoeveelheid besteld: ', ['class' => 'input-group-label']) !!}
+							{!! Form::text('amount', $orderLine['amount'], ['class' => 'input-group-field']) !!}
+							{!! Form::submit('Bijwerken', ['class' => 'button']) !!}
+							{!! Form::hidden('product_id', $product['id']) !!}
+						{!! Form::close() !!}
+					@endif
+				@endforeach
 				<hr>
 			@endforeach
 

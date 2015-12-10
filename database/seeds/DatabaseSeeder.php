@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesAndPermissions::class);
         $this->call(CitiesTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
+        $this->call(IngredientsTableSeeder::class);
+        $this->call(IngredientsInProductsTableSeeder::class);
 
         Model::reguard();
     }

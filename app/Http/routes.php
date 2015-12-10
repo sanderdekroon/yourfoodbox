@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
     return view('index');
 });
 
@@ -30,7 +30,13 @@ Route::resource('pages', 'PagesController');
 // Ordering
 Route::get('/bestellen/markt/{name}', 'CitiesController@setCity');
 Route::get('/bestellen/markt', 'CitiesController@index');
+Route::get('/bestellen/{name}', 'ProductsController@show');
 Route::get('/bestellen', 'ProductsController@index');
+Route::post('/bestellen', 'OrdersController@store');
+Route::patch('/bestellen', 'OrdersController@update');
+
+// Orders
+Route::get('/orders', 'OrdersController@index');
 
 //Dev, please ignore.
 Route::get('/destroySession', 'CitiesController@destroyCity');

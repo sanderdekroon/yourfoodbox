@@ -8,16 +8,29 @@
 
 		@foreach($orders as $order)
 		<div class="small-6 columns callout">
-				<p><strong>Bestelling Nummer: {{$order['id']}}</strong> <br/>Status: {{$order['status']}} Markt: {{$order['city_id']}}. </p>
-				
+			<div class="small-8 columns">
+				<h4>Persoonsgegevens:</h4>
+				<ul>
+					<li>{{$userData[$order['id']]->name}}</li>
+					<li>Tel.: {{$userData[$order['id']]->phonenumber}}</li>
+					<li>E-mail: {{$userData[$order['id']]->email}}</li>
+				</ul>
+			</div>
+			<p class="small-4 columns"><strong>Bestelling nr: {{$order['id']}}</strong> <br/>Status: {{$order['status']}} Markt: {{$order['city_id']}}. </p>
+		
+			<div class="small-12 columns">
+				<h4>Bestelling:</h4>
+				@foreach($orderlines[$order['id']] as $orderline)
+				<p class="small-6 columns">
+					Product: {{$orderline['product_id']}}
+				</p>
+				<p class="small-6 columns">
+					Hoeveelheid: {{$orderline['amount']}}
+				</p>
+				@endforeach
+			</div>
 					
-					@foreach($orderlines[$order['id']] as $orderline)
-					<ul class="small-5 columns">
-						<li>Product: {{$orderline['product_id']}}</li>
-						<li>Hoeveelheid: {{$orderline['amount']}}</li>
-					</ul>
-					@endforeach
-				<p>Bestelling geplaatst op: {{$order['updated_at']->format('d-m-y H:i') }} ({{$order['updated_at']->diffForHumans() }})</p>
+			<p class="small-12 columns">Bestelling geplaatst op: {{$order['updated_at']->format('d-m-y H:i') }} ({{$order['updated_at']->diffForHumans() }})</p>
 		</div>
 		@endforeach
 

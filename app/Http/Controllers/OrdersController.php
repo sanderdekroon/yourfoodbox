@@ -31,9 +31,10 @@ class OrdersController extends Controller
 
         foreach ($orders as $order) {
             $orderlines[$order->id] = $order->orderlines->toArray();
+            $userData[$order->id] = User::findOrFail($order->user_id);
         }
 
-        return view('orders.overview', compact('orders', 'orderlines'));
+        return view('orders.overview', compact('orders', 'orderlines', 'userData'));
     }
 
     /**

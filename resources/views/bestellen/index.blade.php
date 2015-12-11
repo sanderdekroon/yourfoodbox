@@ -29,6 +29,8 @@
 				<hr>
 			@endforeach
 
+			<a class="button" href="{{ action('OrdersController@overview')}}">Bestelling plaatsen!</a>
+
 			<ul class="menu">
 				<li>
 					<a href="{{ action('CitiesController@index')}}" title="Markt wijzigen">Geselecteerde markt: {{$selectedCity['name']}}</a>

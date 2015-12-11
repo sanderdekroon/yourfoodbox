@@ -30,6 +30,7 @@ Route::resource('pages', 'PagesController');
 // Ordering
 Route::get('/bestellen/markt/{name}', 'CitiesController@setCity');
 Route::get('/bestellen/markt', 'CitiesController@index');
+Route::get('/bestellen/bevestigen', 'OrdersController@overview');
 Route::get('/bestellen/{name}', 'ProductsController@show');
 Route::get('/bestellen', 'ProductsController@index');
 Route::post('/bestellen', 'OrdersController@store');

@@ -53,7 +53,6 @@ class OrdersController extends Controller
         ]);
 
         return redirect('bestellen');
-                
     }
 
     /**
@@ -78,6 +77,26 @@ class OrdersController extends Controller
         }
         
         return redirect('bestellen');
-                
+    }
+
+    public function overview(Request $request)
+    {
+        $orderID = $request->session()->get('order_id');
+        $order = Order::findOrFail($orderID)->first();
+        $orderLines = $order->orderlines;
+
+        $userData = $order->user;
+
+        foreach ($orderLines as $orderLine) {
+            $productInfo[$orderLine->id] = $orderLine->product;
+        }
+
+        return view('bestellen.confirm', compact('order', 'orderLines', 'productInfo', 'userData'));
+
+    }
+
+    public function confirm()
+    {
+        
     }
 }

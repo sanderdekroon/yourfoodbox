@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function (Request $request) {
-    return view('index');
-});
+Route::get('/', 'HomeController@index');
+Route::get('/reset', 'HomeController@reset');
 
 // Authentication
 Route::get('/login', 'Auth\AuthController@getLogin');

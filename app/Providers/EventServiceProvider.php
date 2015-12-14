@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -31,7 +32,7 @@ class EventServiceProvider extends ServiceProvider
         parent::boot($events);
 
         $events->listen('auth.logout', function ($event) {
-            //Clear session here.
+            Session::flush();
         });
     }
 }

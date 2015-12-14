@@ -22,16 +22,19 @@ class VerifyOrder
         $sessionOrder = Order::findOrFail($sessionID);
         $sessionOrderLines = $sessionOrder->orderlines()->get();
 
-        foreach ($sessionOrderLines as $sessionOrderLine) {
-            $sessionOrderLine->order_id = $orderID;
-            $sessionOrderLine->save();
+        if (count($sessionOrderLines)) {
+            foreach ($sessionOrderLines as $sessionOrderLine) {
+                $sessionOrderLine->order_id = $orderID;
+                $sessionOrderLine->save();
+            }
         }
 
-        $guest = User::find($sessionOrder->user_id);
+        $guest = User::find($request->session()->get('user_id'));
         $guest->delete();
         $sessionOrder->delete();
 
         $request->session()->put('order_id', $orderID);
+        $request->session()->forget('user_id');
 
         return true;
     }
@@ -78,6 +81,7 @@ class VerifyOrder
             }
 
             $databaseOrderID = Order::where('user_id', '=', Auth::id())->first();
+            $sessionOrderID = $request->session()->get('order_id');
 
             if ($databaseOrderID->id != $sessionOrderID) {
                 $this->mergeOrders($databaseOrderID, $sessionOrderID, $request);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
 use App\Order;
 use App\Product;
 use App\Ingredient;
@@ -12,11 +13,10 @@ use App\Http\Controllers\Controller;
 
 class ProductsController extends Controller
 {
-
     public function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('select.city');
-        $this->middleware('verify.order');
     }
 
     /**
@@ -28,16 +28,14 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
         $selectedCity = $request->session()->get('selectedCity');
-        $orderID = $request->session()->get('order_id');
-        $products = Product::where('city_id', '=', $selectedCity['id'])
-                            ->where('week_no', '=', date('W'))
-                            ->get();
+        $products = $selectedCity->products->where('week_no', date('W'));
 
         if (!$products->count()) {
-            abort(404);
+            abort(404, 'Geen producten gevonden!');
         }
 
-        $order = Order::findOrFail($orderID);
+        $user = Auth::user();
+        $order = $user->orders()->where('status_id', 1)->firstOrFail();
         $orderLines = $order->orderlines->toArray();
 
         return view('bestellen.index', compact('products', 'selectedCity', 'order', 'orderLines'));
@@ -53,14 +51,7 @@ class ProductsController extends Controller
     public function show($name, Request $request)
     {
         $selectedCity = $request->session()->get('selectedCity');
-        $product = Product::where('name', '=', $name)
-                        ->where('week_no', '=', date('W'))
-                        ->where('city_id', '=', $selectedCity['id'])
-                        ->first();
-
-        if (!$product->count()) {
-            abort(404);
-        }
+        $product = $selectedCity->products()->where('name', $name)->where('week_no', date('W'))->firstOrFail();
 
         $ingredients = $product->ingredients->toArray();
         return view('bestellen.show', compact('product', 'ingredients'));

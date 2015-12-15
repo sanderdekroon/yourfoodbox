@@ -81,7 +81,10 @@ class VerifyOrder
             }
 
         } elseif (Auth::check()) {
-            $databaseOrderID = Order::where('user_id', '=', Auth::id())->first();
+            $databaseOrderID = Order::where('user_id', '=', Auth::id())
+                                    ->where('status', '=', 0)
+                                    ->first();
+                                    
             $sessionOrderID = $request->session()->get('order_id');
 
             if (!count($databaseOrderID)) {

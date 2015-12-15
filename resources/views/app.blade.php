@@ -6,7 +6,6 @@
 		<title>Foundation | Welcome</title>
 		<link rel="stylesheet" href="{{URL::asset('css/foundation.css')}}" />
 		<link rel="stylesheet" href="{{URL::asset('css/style.css')}}" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	</head>
 	<body>
 		@include('menu')

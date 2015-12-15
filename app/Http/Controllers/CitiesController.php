@@ -25,12 +25,6 @@ class CitiesController extends Controller
         $city_id = City::where('name', $name)->firstOrFail();
         $request->session()->put('selectedCity', $city_id);
 
-        return redirect('bestellen');
-    }
-
-    public function destroyCity(Request $request)
-    {
-        $request->session()->forget('selectedCity');
-        return redirect('/');
+        return redirect('bestelling');
     }
 }

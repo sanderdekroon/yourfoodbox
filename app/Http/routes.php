@@ -38,3 +38,7 @@ Route::patch('/bestelling', 'OrdersController@update');
 
 // Orders
 Route::get('/orders', 'OrdersController@index');
+
+// Users
+Route::get('/account', 'UsersController@index');
+Route::post('/account', 'UsersController@update');

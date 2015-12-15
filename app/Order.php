@@ -29,4 +29,9 @@ class Order extends Model
     {
         return $this->hasMany('App\Orderline');
     }
+
+    public function status()
+    {
+        return $this->hasOne('App\Status');
+    }
 }

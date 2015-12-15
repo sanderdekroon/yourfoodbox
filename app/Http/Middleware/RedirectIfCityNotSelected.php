@@ -16,7 +16,7 @@ class RedirectIfCityNotSelected
     public function handle($request, Closure $next)
     {
         if (!$request->session()->has('selectedCity')) {
-            return redirect('bestellen/markt');
+            return redirect('bestelling/markt');
         }
 
         return $next($request);

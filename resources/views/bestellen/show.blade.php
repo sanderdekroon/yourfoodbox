@@ -23,7 +23,7 @@
 		<div class="small-5 columns">
 			@include('errors.list')
 
-			{!! Form::open(['url' => 'bestellen']) !!}
+			{!! Form::open(['url' => 'bestelling']) !!}
 					{!! Form::hidden('product_id', $product->id) !!}
 					{!! Form::label('amount', 'Hoeveelheid: ') !!}
 					{!! Form::text('amount', null) !!}

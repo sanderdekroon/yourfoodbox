@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Auth;
 use App\User;
 use App\Order;
-use Carbon\Carbon;
 use App\Orderline;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -27,7 +26,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest()->get();
+        $orders = Order::where('status', '>', 0)->get();
 
         foreach ($orders as $order) {
             $orderlines[$order->id] = $order->orderlines->toArray();
@@ -52,7 +51,7 @@ class OrdersController extends Controller
             'amount' => $request->input('amount')
         ]);
 
-        return redirect('bestellen');
+        return redirect('bestelling');
     }
 
     /**
@@ -76,7 +75,7 @@ class OrdersController extends Controller
             abort(500);
         }
         
-        return redirect('bestellen');
+        return redirect('bestelling');
     }
 
     public function overview(Request $request)
@@ -91,12 +90,26 @@ class OrdersController extends Controller
             $productInfo[$orderLine->id] = $orderLine->product;
         }
 
-        return view('bestellen.confirm', compact('order', 'orderLines', 'productInfo', 'userData'));
+        return view('bestellen.overview', compact('order', 'orderLines', 'productInfo', 'userData'));
 
     }
 
-    public function confirm()
+    public function confirmed(Request $request)
     {
+        $orderID = $request->session()->get('order_id');
+
+        $order = Order::first($orderID);
+        if (!count($order)) {
+            abort(500);
+        } elseif ($order->status != 0) {
+            abort(500);
+        }
+
+        $order->status = 1;
+        $order->save();
+        $request->session()->forget('order_id');
         
+        return view('bestellen.confirm');
+
     }
 }

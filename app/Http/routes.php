@@ -27,16 +27,14 @@ Route::post('/register', 'Auth\AuthController@postRegister');
 Route::resource('pages', 'PagesController');
 
 // Ordering
-Route::get('/bestellen/markt/{name}', 'CitiesController@setCity');
-Route::get('/bestellen/markt', 'CitiesController@index');
-Route::get('/bestellen/bevestigen', 'OrdersController@overview');
-Route::get('/bestellen/{name}', 'ProductsController@show');
-Route::get('/bestellen', 'ProductsController@index');
-Route::post('/bestellen', 'OrdersController@store');
-Route::patch('/bestellen', 'OrdersController@update');
+Route::get('/bestelling/markt/{name}', 'CitiesController@setCity');
+Route::get('/bestelling/markt', 'CitiesController@index');
+Route::get('/bestelling/bevestigen', 'OrdersController@overview');
+Route::get('/bestelling/plaatsen', 'OrdersController@confirmed');
+Route::get('/bestelling/{name}', 'ProductsController@show');
+Route::get('/bestelling', 'ProductsController@index');
+Route::post('/bestelling', 'OrdersController@store');
+Route::patch('/bestelling', 'OrdersController@update');
 
 // Orders
 Route::get('/orders', 'OrdersController@index');
-
-//Dev, please ignore.
-Route::get('/destroySession', 'CitiesController@destroyCity');

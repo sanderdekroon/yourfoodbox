@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        dd($request->session()->get('user_id'));
+        dd($request->session()->get('order_id'));
     }
 
     public function reset(Request $request)

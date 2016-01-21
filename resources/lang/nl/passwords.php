@@ -14,8 +14,8 @@ return [
     */
 
     'password' => 'Wachtwoorden moeten minimaal zes tekens bevatten en overeenkomen.',
-    'reset' => 'Het wachtwoord is opnieuw ingesteld!',
-    'sent' => 'Er is een e-mail verstuurd met een link om het wachtwoord te wijzigen.',
+    'reset' => 'Het wachtwoord van uw account is gewijzigd.',
+    'sent' => 'Er is een e-mail verstuurd met een link om het wachtwoord opnieuw in te stellen.',
     'token' => 'Het wachtwoord reset token is ongeldig.',
     'user' => "Er is geen gebruiker bekend met dat e-mailadres.",
 

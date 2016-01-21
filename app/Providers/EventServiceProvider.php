@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Mail;
 use Session;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

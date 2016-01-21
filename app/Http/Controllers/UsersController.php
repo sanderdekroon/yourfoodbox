@@ -8,6 +8,7 @@ use App\Order;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserUpdateRequest;
 
 class UsersController extends Controller
 {
@@ -46,8 +47,22 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request)
     {
-        //
+        if (!Auth::check()) {
+            return view('auth.login');
+        }
+
+        $user = Auth::user();
+
+        $user->email = $request->input('email');
+        $user->name = $request->input('name');
+        $user->phonenumber = $request->input('phonenumber');
+
+        if (!$user->save()) {
+            abort(500);
+        }
+        
+        return redirect('account');
     }
 }

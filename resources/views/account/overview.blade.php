@@ -8,15 +8,15 @@
 	<div class="row">
 		<div class="large-6 small-12 columns">
 			<ul class="tabs" data-tabs id="account-data">
-				<li class="tabs-title is-active">
+				<li class="tabs-title @if (!$errors->any()) is-active @endif">
 					<a href="#data" aria-selected="true">Jouw gegevens</a>
 				</li>
-				<li class="tabs-title">
+				<li class="tabs-title @if ($errors->any()) is-active @endif">
 					<a href="#edit">Gegevens aanpassen</a>
 				</li>
 			</ul>
 			<div class="tabs-content" data-tabs-content="account-data">
-				<div class="tabs-panel is-active" id="data">
+				<div class="tabs-panel @if (!$errors->any()) is-active @endif" id="data">
 					<h5>Deze gegevens van jou zijn bij ons bekend:</h5>
 					<ul class="clear-list">
 						<li>{{$user->name}}</li>
@@ -24,20 +24,17 @@
 						<li>{{$user->phonenumber}}</li>
 					</ul>
 				</div>
-				<div class="tabs-panel" id="edit">
+				<div class="tabs-panel @if($errors->any()) is-active @endif" id="edit">
 					@include('errors.list')
 
-			        {!! Form::open(['action' => 'Auth\AuthController@postRegister']) !!}
-
-
-                    {!! Form::label('name', 'Naam: ', ['class' => 'middle']) !!}
-                    {!! Form::text('name', $user->name) !!}
-                    {!! Form::label('email', 'E-mail adres: ', ['class' => 'middle']) !!}
-                    {!! Form::text('email', $user->email) !!}
-                    {!! Form::label('phonenumber', 'Telefoonnummer: ', ['class' => 'middle']) !!}
-                    {!! Form::text('phonenumber', $user->phonenumber) !!}
-                    {!! Form::submit('Bewerken', ['class' => 'button']) !!}
-
+			        {!! Form::open(['action' => 'UsersController@update']) !!}
+	                    {!! Form::label('name', 'Naam: ', ['class' => 'middle']) !!}
+	                    {!! Form::text('name', $user->name) !!}
+	                    {!! Form::label('email', 'E-mail adres: ', ['class' => 'middle']) !!}
+	                    {!! Form::text('email', $user->email) !!}
+	                    {!! Form::label('phonenumber', 'Telefoonnummer: ', ['class' => 'middle']) !!}
+	                    {!! Form::text('phonenumber', $user->phonenumber) !!}
+	                    {!! Form::submit('Bewerken', ['class' => 'button']) !!}
 			        {!! Form::close() !!}
 				</div>
 			</div>
@@ -46,7 +43,7 @@
 	<div class="row">
 		<h3>Gemaakte bestellingen:</h3>
 		@foreach ($orders as $order)
-			<div class="large-6 small-12 columns">
+			<div class="large-6 small-12 callout columns">
 				<h4>{{ $cityData[$order->id]['name'] }}</h4>
 				<p>Aangemaakt op: {{$order->created_at->format('d-m-Y')}}<br/>
 				Voor het laatst aangepast op: {{$order->updated_at->format('d-m-Y \o\m H:i') }} 

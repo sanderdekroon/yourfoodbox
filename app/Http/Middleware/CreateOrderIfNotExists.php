@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
+use App\Order;
 
 class CreateOrderIfNotExists
 {
@@ -15,6 +17,18 @@ class CreateOrderIfNotExists
      */
     public function handle($request, Closure $next)
     {
+        $user = Auth::user();
+        $selectedCity = $request->session()->get('selectedCity');
+        $order = $user->orders()->where('status_id', 1)->get();
+
+        if (!count($order)) {
+            $createOrder = Order::create([
+                'user_id' => $user->id,
+                'status_id' => 1,
+                'city_id' => $selectedCity['id']
+            ]);
+        }
+
         return $next($request);
     }
 }

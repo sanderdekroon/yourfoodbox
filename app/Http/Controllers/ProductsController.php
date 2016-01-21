@@ -17,6 +17,7 @@ class ProductsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('select.city');
+        $this->middleware('check.order');
     }
 
     /**
@@ -28,7 +29,7 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
         $selectedCity = $request->session()->get('selectedCity');
-        $products = $selectedCity->products->where('week_no', date('W'));
+        $products = $selectedCity->products()->where('week_no', date('W'))->get();
 
         if (!$products->count()) {
             abort(404, 'Geen producten gevonden!');
@@ -52,8 +53,12 @@ class ProductsController extends Controller
     {
         $selectedCity = $request->session()->get('selectedCity');
         $product = $selectedCity->products()->where('name', $name)->where('week_no', date('W'))->firstOrFail();
-
         $ingredients = $product->ingredients->toArray();
-        return view('bestellen.show', compact('product', 'ingredients'));
+
+        $user = Auth::user();
+        $order = $user->orders()->where('status_id', 1)->firstOrFail();
+        $orderLines = $order->orderlines->toArray();
+
+        return view('bestellen.show', compact('product', 'ingredients', 'orders', 'orderLines'));
     }
 }

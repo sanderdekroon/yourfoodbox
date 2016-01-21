@@ -11,6 +11,7 @@ fieldset {
 	max-width: 70rem;
 	margin-left: auto;
 	margin-right: auto;
+	padding:0;
 }
 
 .contain-to-grid {
@@ -24,4 +25,29 @@ fieldset {
 
 .clear-list {
 	list-style-type: none;
+}
+
+/* Order Overview */
+#order-overview .callout {
+	min-height: 450px;
+}
+
+#order-overview .callout.warning {
+	min-height: auto;
+}
+
+#order-overview .ordered {
+	background-color: #def0fc;
+}
+
+#order-overview .ready {
+	background-color: #fff3d9;
+}
+
+#order-overview .completed {
+	background-color: #e1faea;
+}
+
+#order-overview .cancelled {
+	background-color: #fce6e2;
 }

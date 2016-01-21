@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Auth;
 use App\User;
 use App\Order;
+use App\Status;
 use App\Orderline;
 use App\Product;
 use App\Http\Requests;
@@ -18,11 +20,13 @@ class OrdersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('auth.moderator', ['only' => ['index'] ]);
+        $this->middleware('auth.moderator', ['only' => ['index', 'updateStatus'] ]);
         $this->middleware('select.city');
+        $this->middleware('check.order', ['except' => ['confirmed']]);
     }
+
     /**
-     * Return all orders.
+     * Return all orders and add option to change status or order.
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,17 +38,17 @@ class OrdersController extends Controller
         foreach ($orders as $order) {
             $orderlines[$order->id] = $order->orderlines->toArray();
             $userData[$order->id] = User::findOrFail($order->user_id);
-            $statusData[$order->id] = $order->status->toArray();
             $cityData[$order->id] = $order->city->toArray();
         }
 
+        $statusData = Status::all();
         $productData = Product::where('week_no', date('W'))->get();
 
         return view('orders.overview', compact('orders', 'orderlines', 'userData', 'statusData', 'cityData', 'productData'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created order in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -53,14 +57,26 @@ class OrdersController extends Controller
     {
         $user = Auth::user();
         $order = $user->orders()->where('status_id', 1)->firstOrFail();
+        $orderLine = $order->orderlines()->where('product_id', $request->input('product_id'))->first();
+        if (count($orderLine)) {
+            $orderLine->amount = $request->input('amount');
+            $orderLine->save();
+        } else {
+            Orderline::create([
+                'order_id' => $order->id,
+                'product_id' => $request->input('product_id'),
+                'amount' => $request->input('amount')
+            ]);
+        }
         
-        Orderline::create([
-            'order_id' => $order->id,
+        $data = [
+            'succes' => true,
             'product_id' => $request->input('product_id'),
-            'amount' => $request->input('amount')
-        ]);
+            'amount' => $request->input('amount'),
+            'order_id' => $order->id
+        ];
 
-        return redirect('bestelling');
+        return response()->json($data);
     }
 
     /**
@@ -87,6 +103,11 @@ class OrdersController extends Controller
         return redirect('bestelling');
     }
 
+    /**
+     * Generate an order overview for the user
+     * @param  Request $request The incomming request
+     * @return response
+     */
     public function overview(Request $request)
     {
         $user = Auth::user();
@@ -103,15 +124,39 @@ class OrdersController extends Controller
 
     }
 
+    /**
+     * Confirm an order. Send an e-mail to the user and return a confirmation view.
+     * @param  Request $request The incomming request
+     * @return response
+     */
     public function confirmed(Request $request)
     {
         $user = Auth::user();
-        $order = $user->orders()->where('status_id', 1)->firstOrFail();
+        $order = $user->orders()->where('status_id', 1)->first();
+        if (!count($order)) {
+            return redirect('/bestelling');
+        }
 
         $order->status_id = 2;
-        $order->save();
-        
-        return view('bestellen.confirm');
+        if ($order->save()) {
+            $orderLines = $order->orderlines;
+            Mail::send('emails.order', compact('order', 'orderLines', 'user'), function ($m) use ($user) {
+                $m->from('kratenklaar@dekroon.xyz', 'Krat en Klaar');
 
+                $m->to($user->email, $user->name)->subject('Bestelling geplaatst');
+            });
+            return view('bestellen.confirm');
+        }
+        return abort(500);
+    }
+
+
+    public function updateStatus(Request $request)
+    {
+        $order = Order::findOrFail($request->input('order_id'));
+        $order->status_id = $request->input('status');
+        $order->save();
+
+        return redirect('/orders');
     }
 }

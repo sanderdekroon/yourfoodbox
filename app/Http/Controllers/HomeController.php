@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Mail;
 use Auth;
+use App\User;
+use App\Order;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +20,8 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        dd($request->session()->get('order_id'));
+        return view('index');
+
     }
 
     public function reset(Request $request)

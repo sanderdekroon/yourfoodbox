@@ -26,7 +26,7 @@ class OrderRequest extends Request
     {
         $rules = [
             'product_id' => 'required|exists:products,id,week_no,'.date('W'),
-            'amount' => 'required'
+            'amount' => 'required|integer|between:1,5'
         ];
 
         return $rules;

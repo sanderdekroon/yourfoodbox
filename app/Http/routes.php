@@ -34,10 +34,11 @@ Route::get('/bestelling/plaatsen', 'OrdersController@confirmed');
 Route::get('/bestelling/{name}', 'ProductsController@show');
 Route::get('/bestelling', 'ProductsController@index');
 Route::post('/bestelling', 'OrdersController@store');
-Route::patch('/bestelling', 'OrdersController@update');
+Route::patch('/bestelling', 'OrdersController@update'); //@to-do: Transfer to OrderlinesController
 
 // Orders
 Route::get('/orders', 'OrdersController@index');
+Route::patch('/orders', 'OrdersController@updateStatus');
 
 // Users
 Route::get('/account', 'UsersController@index');

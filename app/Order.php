@@ -12,7 +12,7 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'status', 'city_id'];
+    protected $fillable = ['user_id', 'status_id', 'city_id'];
     
     
     public function city()

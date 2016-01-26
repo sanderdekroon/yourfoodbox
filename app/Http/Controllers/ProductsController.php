@@ -30,6 +30,9 @@ class ProductsController extends Controller
     {
         $selectedCity = $request->session()->get('selectedCity');
         $products = $selectedCity->products()->where('week_no', date('W'))->get();
+        foreach ($products as $product) {
+            $ingredients[$product->id] = $product->ingredients->toArray();
+        }
 
         if (!$products->count()) {
             abort(404, 'Geen producten gevonden!');
@@ -39,7 +42,7 @@ class ProductsController extends Controller
         $order = $user->orders()->where('status_id', 1)->firstOrFail();
         $orderLines = $order->orderlines->toArray();
 
-        return view('bestellen.index', compact('products', 'selectedCity', 'order', 'orderLines'));
+        return view('bestellen.index', compact('products', 'selectedCity', 'order', 'orderLines', 'ingredients'));
     }
 
     /**

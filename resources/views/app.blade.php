@@ -19,8 +19,10 @@
 			@include('menu')
 
 			@yield('content')
-
-			@include('footer')
+			
+			@if(isset($orderLines))
+				@include('footer')
+			@endif
 		</div>
 		<script src="{{URL::asset('js/vendor/jquery.min.js')}}"></script>
 	    <script src="{{URL::asset('js/foundation.min.js')}}"></script>

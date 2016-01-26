@@ -115,6 +115,7 @@ h3, h4, h5, h6 {
 
 .button:focus {
 	color: white;
+	outline: none;
 }
 
 .button.disabled, .button[disabled], img.disabled {
@@ -263,7 +264,7 @@ h3, h4, h5, h6 {
 	position: fixed;
 	bottom: 0;
 	z-index: 99;
-	width: 33.33333%;
+	width: 31.33333%;
 	left: 33.33333%;
 	background: white;
 	min-height: 4em;
@@ -381,7 +382,7 @@ h3, h4, h5, h6 {
 }
 
 /*********** Ingredients styling ***********/
-.ingredients-list li {
+#ingredients-list li {
 	padding: 0.5em 0;
 }
 
@@ -396,7 +397,7 @@ h3, h4, h5, h6 {
 }
 
 .selector.disabled img.selected {
-	opacity: 0.5;
+	opacity: 0.6;
 }
 
 .selector > div {

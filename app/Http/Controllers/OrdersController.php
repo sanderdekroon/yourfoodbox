@@ -7,6 +7,7 @@ use Auth;
 use App\User;
 use App\Order;
 use App\Status;
+use Carbon\Carbon;
 use App\Orderline;
 use App\Product;
 use App\Http\Requests;
@@ -113,6 +114,11 @@ class OrdersController extends Controller
         $user = Auth::user();
         $order = $user->orders()->where('status_id', 1)->firstOrFail();
         $orderLines = $order->orderlines;
+        $city = $order->city;
+
+        $currentDate = Carbon::now();
+        $monday = $currentDate->startOfWeek();
+        $openingDayDate = $monday->addDays($city->openingDay-1)->format('l d F');
 
         $userData = $order->user;
 
@@ -120,7 +126,7 @@ class OrdersController extends Controller
             $productInfo[$orderLine->id] = $orderLine->product;
         }
 
-        return view('bestellen.overview', compact('order', 'orderLines', 'productInfo', 'userData'));
+        return view('bestellen.overview', compact('order', 'orderLines', 'productInfo', 'userData', 'city', 'openingDayDate'));
 
     }
 

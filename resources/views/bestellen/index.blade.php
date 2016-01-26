@@ -57,16 +57,39 @@
 				@endif
 			</div>
 
+			<div class="column row hidden" id="ingredients-list">
+				<p class="small-12 columns">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat.</p>
+				<h4 class="small-12 columns light-green-text alt-font">Wat zit er in?</h4>
+				<ul class="menu small-10 columns">
+				@foreach($ingredients[$product['id']] as $ingredient)
+					<li class="small-6 columns end">
+						{{$ingredient['name']}}
+					</li>
+				@endforeach
+				</ul>
+				<h4 class="small-12 columns light-green-text alt-font">Zelf toevoegen</h4>
+				<ul class="menu small-10 columns">
+					<li class="small-6 columns end">Peper &amp; Zout</li>
+					<li class="small-6 columns end">(Olijf)olie</li>
+				</ul>
+				
+			</div>
+
+
 			<div class="row">
 				<div class="small-6 columns">
 					<button class="button orange expanded add-products" id="product_{{$product['id']}}">Toevoegen</button>
 				</div>
 				<div class="small-6 columns">
-					<a class="button orange expanded" href="{{ action('ProductsController@show', $product->name)}}" title="{{ $product->name }} bekijken">
+					<button class="button orange expanded show-product" title="{{ $product->name }} bekijken">
 						Bekijken
-					</a>
+					</button>
 				</div>
 			</div>
+
 		</div>
 		@if(array_search($product['id'], array_column($orderLines, 'product_id')) === false)
 			<div class="panel selector hidden">

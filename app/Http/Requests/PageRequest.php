@@ -13,9 +13,6 @@ class PageRequest extends Request
      */
     public function authorize()
     {
-        // if (Entrust::hasRole('admin')) { //admin can create and edit pages.
-        //     return true;
-        // }
         return true;
     }
 

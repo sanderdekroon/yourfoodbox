@@ -17,7 +17,7 @@
 			<div class="panel product-overview hidden">
 		@endif
 			<h2 class="ribbon"><span>
-				<a href="{{ action('ProductsController@show', $product->name)}}" title="{{ $product->name }}">
+				<a href="#" title="{{ $product->name }}">
 					{{ $product->name }}
 				</a>
 			</span></h2>
@@ -98,7 +98,7 @@
 			<div class="panel selector disabled">
 			<h2 class="ribbon"><span>
 		@endif
-				<a href="{{ action('ProductsController@show', $product->name)}}" title="{{ $product->name }}">
+				<a href="#" title="{{ $product->name }}">
 					{{ $product->name }}
 				</a>
 			</span></h2>

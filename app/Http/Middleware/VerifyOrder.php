@@ -6,7 +6,6 @@ use Auth;
 use Closure;
 use App\User;
 use App\Order;
-use App\Orderline;
 
 class VerifyOrder
 {

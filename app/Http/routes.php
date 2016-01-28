@@ -31,7 +31,6 @@ Route::get('/bestelling/markt/{name}', 'CitiesController@setCity');
 Route::get('/bestelling/markt', 'CitiesController@index');
 Route::get('/bestelling/bevestigen', 'OrdersController@overview');
 Route::get('/bestelling/plaatsen', 'OrdersController@confirmed');
-//Route::get('/bestelling/{name}', 'ProductsController@show');
 Route::get('/bestelling', 'ProductsController@index');
 Route::post('/bestelling', 'OrdersController@store');
 Route::patch('/bestelling', 'OrdersController@update'); //@to-do: Transfer to OrderlinesController

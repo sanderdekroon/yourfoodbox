@@ -18,7 +18,7 @@
 			</div>
 		@endif
 		@foreach($orders as $order)
-		<div class="small-6 columns callout {{$statusData->where('id', $order->status_id)->first()['name']}}">
+		<div class="small-6 columns panel no-ribbon end {{$statusData->where('id', $order->status_id)->first()['name']}}">
 			<div class="small-8 columns">
 				<h5>Persoonsgegevens:</h5>
 				<ul>
@@ -62,15 +62,15 @@
 			<div class="small-12 columns">
 				<strong>Status bijwerken:</strong>
 				
-				{!! Form::open(['method' => 'PATCH', 'url' => '/orders', 'id' => 'order'.$order->id, 'name' => 'order'.$order->id]) !!}
+				{!! Form::open(['method' => 'PATCH', 'url' => '/manager/orders', 'id' => 'order'.$order->id, 'name' => 'order'.$order->id]) !!}
 					{!! Form::hidden('order_id', $order->id) !!}
 
 					<select name="status" id="order{{$order->id}}" class="status-update">
 					@foreach ($statusData as $status)
 						@if ($status->id == $order->status_id)
-						<option selected="selected" value="{{$status->id}}">{{$status->name}}</option>
+						<option selected="selected" value="{{$status->id}}">{{$status->name}} - {{$status->description}}</option>
 						@else
-						<option value="{{$status->id}}">{{$status->name}}</option>
+						<option value="{{$status->id}}">{{$status->name}} - {{$status->description}}</option>
 						@endif
 						
 					@endforeach
@@ -86,12 +86,9 @@
 @stop
 
 @section('javascript')
-
 	<script type="text/javascript">
 		$("select.status-update").on("change", function(event) {
 			$(this).parents("form").submit();
 		});
 	</script>
-
-
 @stop

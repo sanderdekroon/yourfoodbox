@@ -159,6 +159,8 @@
 	</div>
 @stop
 
+@include('footer')
+
 @section('javascript')
 	<script src="{{ URL::asset('js/selector.js') }}"></script>
 @stop

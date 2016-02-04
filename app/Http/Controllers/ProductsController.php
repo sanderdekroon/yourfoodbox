@@ -9,6 +9,7 @@ use App\Order;
 use App\Product;
 use App\Ingredient;
 use App\Http\Requests;
+use App\IngredientsInProduct;
 use App\Http\Controllers\Controller;
 
 class ProductsController extends Controller
@@ -63,5 +64,100 @@ class ProductsController extends Controller
         $orderLines = $order->orderlines->toArray();
 
         return view('bestellen.show', compact('product', 'ingredients', 'orders', 'orderLines'));
+    }
+
+    public function store(Request $request)
+    {
+        $ingredients = Ingredient::get()->toArray();
+
+        $newProduct = new Product;
+        $newProduct->week_no = $request->input('week_no');
+        $newProduct->year = $request->input('year');
+        $newProduct->name = $request->input('name');
+        $newProduct->description = $request->input('description');
+        $newProduct->city_id = 1;
+        $newProduct->save();
+
+        foreach ($request->input('ingredient-list') as $inputIngredient) {
+            $ingredientSearch = array_search($inputIngredient, array_column($ingredients, 'name'));
+
+            if ($ingredientSearch === false) {
+                $newIngredient = new Ingredient;
+                $newIngredient->name = $inputIngredient;
+                $newIngredient->unit = 'stuks';
+                $newIngredient->type = 'groente';
+                $newIngredient->min_amount = 1;
+
+                if (!$newIngredient->save()) {
+                    abort(500);
+                }
+
+                $attachIngredientToProduct = new IngredientsInProduct;
+                $attachIngredientToProduct->product_id = $newProduct->id;
+                $attachIngredientToProduct->ingredient_id = $newIngredient->id;
+                $attachIngredientToProduct->save();
+
+            } else {
+                $attachIngredientToProduct = new IngredientsInProduct;
+                $attachIngredientToProduct->product_id = $newProduct->id;
+                $attachIngredientToProduct->ingredient_id = $ingredients[$ingredientSearch]['id'];
+                $attachIngredientToProduct->save();
+            }
+        }
+
+        return redirect('manager/products');
+    }
+
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        $ingredientsInProduct = $product->ingredients->all();
+        $allIngredients = Ingredient::all();
+
+        return view('manager.edit-product', compact('product', 'ingredientsInProduct', 'allIngredients'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $allIngredients = Ingredient::get()->toArray();
+        $ingredientsInProduct = $product->ingredients->toArray();
+
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->week_no = $request->input('week_no');
+        $product->year = $request->input('year');
+        $product->save();
+
+        foreach ($ingredientsInProduct as $ingredient) {
+            if (array_search($ingredient['name'], $request->input('ingredient-list')) === false) {
+                IngredientsInProduct::where('product_id', $id)->where('ingredient_id', $ingredient['id'])->delete();
+            }
+        }
+
+        foreach ($request->input('ingredient-list') as $inputIngredient) {
+            if (is_int(array_search($inputIngredient, array_column($ingredientsInProduct, 'name')))) {
+                //No state change
+            } elseif (is_int(array_search($inputIngredient, array_column($allIngredients, 'name')))) {
+                $attachIngredientToProduct = new IngredientsInProduct;
+                $attachIngredientToProduct->product_id = $id;
+                $attachIngredientToProduct->ingredient_id = $allIngredients[array_search($inputIngredient, array_column($allIngredients, 'name'))]['id'];
+                $attachIngredientToProduct->save();
+            } else {
+                $newIngredient = new Ingredient;
+                $newIngredient->name = $inputIngredient;
+                $newIngredient->unit = 'stuks';
+                $newIngredient->type = 'groente';
+                $newIngredient->min_amount = 1;
+                $newIngredient->save();
+
+                $attachIngredientToProduct = new IngredientsInProduct;
+                $attachIngredientToProduct->product_id = $id;
+                $attachIngredientToProduct->ingredient_id = $newIngredient->id;
+                $attachIngredientToProduct->save();
+            }
+        }
+
+        return redirect()->action('ProductsController@edit', [$id])->with('status', 'Ingredient update is geslaagd!');
     }
 }

@@ -27,17 +27,29 @@ Route::post('/register', 'Auth\AuthController@postRegister');
 Route::resource('pages', 'PagesController');
 
 // Ordering
-Route::get('/bestelling/markt/{name}', 'CitiesController@setCity');
-Route::get('/bestelling/markt', 'CitiesController@index');
+Route::get('/bestelling/markt/{name}', 'CitiesController@setCity'); //@to-do: Integrate city selection with view
+Route::get('/bestelling/markt', 'CitiesController@index'); //@to-do: Integrate city selection with view
 Route::get('/bestelling/bevestigen', 'OrdersController@overview');
 Route::get('/bestelling/plaatsen', 'OrdersController@confirmed');
 Route::get('/bestelling', 'ProductsController@index');
 Route::post('/bestelling', 'OrdersController@store');
 Route::patch('/bestelling', 'OrdersController@update'); //@to-do: Transfer to OrderlinesController
 
-// Orders
-Route::get('/orders', 'OrdersController@index');
-Route::patch('/orders', 'OrdersController@updateStatus');
+// Manager
+Route::get('/manager', 'ManagerController@index');
+Route::get('/manager/orders', 'OrdersController@index');
+Route::patch('/manager/orders', 'OrdersController@updateStatus');
+
+Route::get('/manager/products', 'ManagerController@listProducts');
+Route::post('/manager/products', 'ProductsController@store');
+Route::get('/manager/products/{id}', 'ProductsController@edit');
+Route::patch('/manager/products/{id}', 'ProductsController@update');
+
+
+Route::get('/manager/ingredients', 'IngredientsController@index');
+Route::get('/manager/ingredients/{id}', 'IngredientsController@show');
+Route::patch('/manager/ingredients/{id}', 'IngredientsController@update');
+
 
 // Users
 Route::get('/account', 'UsersController@index');

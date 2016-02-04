@@ -45,7 +45,7 @@ class OrdersController extends Controller
         $statusData = Status::all();
         $productData = Product::where('week_no', date('W'))->get();
 
-        return view('orders.overview', compact('orders', 'orderlines', 'userData', 'statusData', 'cityData', 'productData'));
+        return view('manager.overview', compact('orders', 'orderlines', 'userData', 'statusData', 'cityData', 'productData'));
     }
 
     /**
@@ -159,10 +159,29 @@ class OrdersController extends Controller
 
     public function updateStatus(Request $request)
     {
+        $statuses = Status::where('id', $request->input('status'))->firstOrFail();
         $order = Order::findOrFail($request->input('order_id'));
+
+        switch ($statuses->id) {
+            case '3':
+                $user = $order->user()->first();
+                Mail::send('emails.order-ready', compact('order', 'orderLines', 'user'), function ($m) use ($user) {
+                    $m->from('kratenklaar@dekroon.xyz', 'Krat en Klaar');
+                    $m->to($user->email, $user->name)->subject('Bestelling gereed!');
+                });
+                break;
+            case '5':
+                $user = $order->user()->first();
+                Mail::send('emails.order-cancelled', compact('order', 'orderLines', 'user'), function ($m) use ($user) {
+                    $m->from('kratenklaar@dekroon.xyz', 'Krat en Klaar');
+                    $m->to($user->email, $user->name)->subject('Bestelling geannuleerd');
+                });
+                break;
+        }
+        
         $order->status_id = $request->input('status');
         $order->save();
 
-        return redirect('/orders');
+        return redirect('/manager/orders');
     }
 }

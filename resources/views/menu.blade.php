@@ -2,7 +2,7 @@
     <div class="top-bar">
         <div class="top-bar-left">
             <ul class="dropdown menu" data-dropdown-menu>
-                <li class="menu-text">Your Food Box</li>
+                <li class="menu-text">DEV Menu</li>
                 <li><a href="{{url('/')}}">Home</a></li>
                 <li><a href="{{url('/bestelling')}}">Bestellen</a></li>
             </ul>
@@ -13,9 +13,9 @@
                     <li><span>Ingelogd als:</span></li>
                     <li><a href="{{action('UsersController@index')}}">{{Auth::user()['name']}}</a></li>
                     @if(Entrust::hasRole('admin'))
-                        <li><a href="{{action('OrdersController@index')}}">Orders</a></li>
+                        <li><a href="{{url('manager')}}">Manager</a></li>
                     @elseif(Entrust::hasRole('moderator'))
-                        <li><a href="{{action('OrdersController@index')}}">Orders</a></li>
+                        <li><a href="{{url('manager')}}">Manager</a></li>
                     @endif
                     <li><a href="{{action('Auth\AuthController@getLogout')}}">Uitloggen</a></li>
                 @else

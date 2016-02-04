@@ -52,24 +52,25 @@
 					
 					<p class="white-text"><strong>{{$i}}</strong> maaltijden</p>
 				</div>
-				<div class="columns row meal-overview">
-					<h6>Pasta Pesto: &euro;?,-</h6>
-					<img class="small-4 medium-3 large-2 columns" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns disabled" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns disabled" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns disabled" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns disabled" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-				</div>
-				<div class="columns row meal-overview">
-					<h6>Spaghetti: &euro;?,-</h6>
-					<img class="small-4 medium-3 large-2 columns" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns disabled" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-					<img class="small-4 medium-3 large-2 columns disabled" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
-				</div>
+				@foreach($orderLines as $orderLine)
+					<div class="columns row meal-overview">
+						<h6>
+						@foreach($products as $product)
+							@if($product['id'] == $orderLine['product_id'])
+								{{$product['name']}}
+							@endif
+						@endforeach
+						: &euro;?,-</h6>
+						
+						@for ($i = 1; $i <= 6; $i++)
+							@if($orderLine['amount'] >= $i)
+								<img class="small-4 medium-3 large-2 columns" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
+							@else
+								<img class="small-4 medium-3 large-2 columns disabled" src="{{URL::asset('img/icons/meal-icon-square-white.svg')}}">
+							@endif
+						@endfor
+					</div>
+				@endforeach
 			</div>
 		</div>
 
@@ -95,7 +96,7 @@
 </div>
 
 <div id="footer-order-cta">
-	<a class="button orange expanded @if(!count($orderLines)) disabled @endif" href="#">Bestellen</a>
+	<a class="button orange expanded @if(!count($orderLines)) disabled @endif" href="{{URL::action('OrdersController@overview')}}">Bestellen</a>
 	<img src="{{URL::asset('img/icons/euro-icon.svg')}}">
 	<p>Voor 0,-</p>
 </div>

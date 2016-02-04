@@ -50,7 +50,7 @@ $(document).ready(function(e){
 		$(product).find(".selector").addClass("disabled");
 
 		$.ajax({
-			url: 'bestelling',
+			url: window.location.pathname,
 			type: 'POST',
 			beforeSend: function (xhr) {
 				var token = $("meta[name='csrf-token']").attr("content");

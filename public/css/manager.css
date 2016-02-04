@@ -1,0 +1,183 @@
+.input-group-label, .input-group-field, .input-group-button, textarea {
+	color: #3C3C3C;
+}
+
+fieldset {
+	border: 1px solid #ededed;
+	padding: 2em 1em;
+}
+
+.top-bar {
+	max-width: 70rem;
+	margin-left: auto;
+	margin-right: auto;
+	padding:0;
+	margin-bottom: 2em;
+}
+
+.contain-to-grid, .top-bar, .top-bar a {
+	background: #C57F23;
+	color: white;
+}
+
+.top-bar li:hover {
+	opacity: 0.5;
+}
+
+.top-bar li:hover a {
+	color: black;
+	opacity: 1;
+}
+
+.no-spacing {
+	margin: 0;
+	padding: 0;
+}
+
+.clear-list {
+	list-style-type: none;
+}
+
+.button {
+	margin: 0;
+}
+
+.button:hover {
+	color: black;
+	opacity: 0.5;
+}
+
+.hidden {
+	display: none;
+}
+
+/*********** Fonts ***********/
+@font-face {
+	font-family: 'DINCondensed-Bold';
+	src: url('../fonts/DINCondensed-Bold.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/DINCondensed-Bold.woff') format('woff'), 
+	url('../fonts/DINCondensed-Bold.ttf')  format('truetype'), 
+	url('../fonts/DINCondensed-Bold.svg#DINCondensed-Bold') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NewsGothicMT';
+	src: url('../fonts/NewsGothicMT.eot?#iefix') format('embedded-opentype'),  
+	url('../fonts/NewsGothicMT.woff') format('woff'), 
+	url('../fonts/NewsGothicMT.ttf')  format('truetype'), 
+	url('../fonts/NewsGothicMT.svg#NewsGothicMT') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	font-family: 'NewsGothicMT', sans-serif;
+}
+
+h1, h2 {
+	font-family: 'DINCondensed-Bold', sans-serif;
+}
+
+h3, h4, h5, h6 {
+	font-family: 'NewsGothicMT', sans-serif;
+	font-weight: bold;
+	color: rgb(55,55,55);
+}
+
+.panel {
+	background: white;
+	border: 1px solid rgb(187,187,187);
+	padding: 1em;
+	border-radius: 0.75em;
+	margin-bottom: 1.5em;
+}
+
+/*********** Basic text color schema ***********/
+.white-text {
+	color: #FFFFFF;
+}
+
+.gray-text {
+	color: #6C6C6C;
+}
+
+.light-green-text {
+	color: #83B443;
+}
+
+.dark-green-text{
+	color: #7AA030;
+}
+
+.orange-text {
+	color: #C57F23;
+}
+
+.center-text {
+	text-align: center;
+}
+
+/*********** Basic background color schema ***********/
+.gray {
+	background: #6C6C6C;
+}
+
+.light-green {
+	background: #83B443;
+}
+
+.dark-green{
+	background: #7AA030;
+}
+
+.orange {
+	background: #C57F23;
+}
+
+.white {
+	background: #FFFFFF;
+}
+
+/* Order Overview */
+#order-overview .callout {
+	min-height: 450px;
+}
+
+#order-overview .callout.warning {
+	min-height: auto;
+}
+
+#order-overview .ordered {
+	background-color: #def0fc;
+}
+
+#order-overview .ready {
+	background-color: #fff3d9;
+}
+
+#order-overview .completed {
+	background-color: #e1faea;
+}
+
+#order-overview .cancelled {
+	background-color: #fce6e2;
+}
+
+/* Ingredient selector */
+.selectize-control.multi .selectize-input > .item {
+	background: #83B443;
+	color: white;
+	padding: 8px 11px;
+}
+
+.selectize-control.multi .selectize-input > .item:hover {
+	background: #C57F23;
+}
+
+
+
+
+
+

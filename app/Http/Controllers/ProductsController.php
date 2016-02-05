@@ -20,6 +20,17 @@ class ProductsController extends Controller
         $this->middleware('select.city');
         $this->middleware('check.order');
     }
+    /**
+     * Searches for the $needle in a multidimensional $haystack with fieldnames of $field
+     * @param  string $needle   The phrase (ingredient) to look for
+     * @param  array $haystack  Multidimensional array to search
+     * @param  string $field    Name of the field where to search the $needle
+     * @return boolean/integer  Returns the position of the array where the needle was found or false on failure.
+     */
+    private function ingredientSearch($needle, $haystack, $field)
+    {
+        return array_search($needle, array_column($haystack, $field));
+    }
 
     /**
      * Display a listing of the resource.
@@ -123,11 +134,7 @@ class ProductsController extends Controller
         $allIngredients = Ingredient::get()->toArray();
         $ingredientsInProduct = $product->ingredients->toArray();
 
-        $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->week_no = $request->input('week_no');
-        $product->year = $request->input('year');
-        $product->save();
+        $product->update($request->all());
 
         foreach ($ingredientsInProduct as $ingredient) {
             if (array_search($ingredient['name'], $request->input('ingredient-list')) === false) {
@@ -136,9 +143,9 @@ class ProductsController extends Controller
         }
 
         foreach ($request->input('ingredient-list') as $inputIngredient) {
-            if (is_int(array_search($inputIngredient, array_column($ingredientsInProduct, 'name')))) {
-                //No state change
-            } elseif (is_int(array_search($inputIngredient, array_column($allIngredients, 'name')))) {
+            if (is_int($this->ingredientSearch($inputIngredient, $ingredientsInProduct, 'name'))) {
+
+            } elseif (is_int($this->ingredientSearch($inputIngredient, $allIngredients, 'name'))) {
                 $attachIngredientToProduct = new IngredientsInProduct;
                 $attachIngredientToProduct->product_id = $id;
                 $attachIngredientToProduct->ingredient_id = $allIngredients[array_search($inputIngredient, array_column($allIngredients, 'name'))]['id'];

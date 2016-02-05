@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="{{URL::asset('css/ribbon.css')}}" />
 		<link rel="stylesheet" href="{{URL::asset('css/selectize.css')}}" />
 		<link href='https://fonts.googleapis.com/css?family=Arimo:700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
 	</head>
 	<body>
 		@include('manager.manager-menu')

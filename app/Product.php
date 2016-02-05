@@ -10,6 +10,9 @@ class Product extends Model
         'week_no', 'year', 'name', 'description', 'city_id'
     ];
 
+    protected $guarded = [
+        'id', 'updated_at', 'created_at'
+    ];
     /**
      * A product belongs to a city.
      *
